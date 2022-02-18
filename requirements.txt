@@ -1,0 +1,12 @@
+certifi==2021.5.30
+charset-normalizer==2.0.4
+idna==3.2
+requests==2.26.0
+selenium==3.141.0
+urllib3==1.26.6
+Faker==9.9.1
+webdriver-manager==3.5.2
+fpdf==1.7.2
+SpeechRecognition==3.8.1
+pydub==0.25.1
+random-password-generator==2.2.0
