@@ -112,7 +112,7 @@ def application_part_2(driver, random_city, fake_identity, xp1, xp2):
 
     driver.find_element_by_xpath(xp2).click()
 
-    printf(f"successfully filled out app forms for {random_city}")
+    printf(f"Successfully filled out app forms for {random_city}")
 
     # take out the trash
     os.remove(resume_filename+'.pdf')

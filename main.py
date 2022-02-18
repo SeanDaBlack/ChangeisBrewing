@@ -52,7 +52,7 @@ fake = Faker()
 printf = functools.partial(print, flush=True)
 
 r = sr.Recognizer()
-
+i=0
 #Option parsing
 parser = argparse.ArgumentParser(SCRIPT_DESCRIPTION,epilog=EPILOG)
 parser.add_argument('--cloud',action='store_true',default=CLOUD_DISABLED,required=False,help=CLOUD_DESCRIPTION,dest='cloud')
@@ -108,12 +108,13 @@ def generate_account(driver, fake_identity):
 
     time.sleep(random.randint(0, 2))
 
-    printf(f"successfully made account for fake email {email}")
+    printf(f"Successfully made account for fake email {email}")
 
 
 def fill_out_application_and_submit(driver, random_city, fake_identity):
-
+    
     if random_city == 'Memphis':
+        print('Filling Applicaion for ' + random_city)
         application_part_1(driver, random_city, fake_identity)
         driver.find_element_by_xpath(CONTINUE).click()
         time.sleep(1)
@@ -159,8 +160,10 @@ def fill_out_application_and_submit(driver, random_city, fake_identity):
         driver.find_element_by_xpath(SUBMIT_APP).click()
         time.sleep(2)
 
-        print("APPLICATION SENT")
+        i += 1
+        print(i + " APPLICATION SENT")
     elif random_city == 'Seattle':
+        print('Filling Applicaion for ' + random_city)
         try:
             driver.find_element_by_xpath(
                 '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
@@ -168,46 +171,52 @@ def fill_out_application_and_submit(driver, random_city, fake_identity):
             driver.find_element_by_xpath(
                 '//*[@id="editTemplateMultipart-editForm-content-ftf-saveContinueCmdBottom"]').click()
         time.sleep(1)
-
+        print('Part 2')
         partner_application_part_2(driver, random_city, fake_identity)
         time.sleep(1)
-
+        print('Part 3')
         partner_application_part_3(driver, random_city, fake_identity)
 
         time.sleep(1)
         driver.find_element_by_xpath(
             '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
         time.sleep(1)
+
+        print('Part 4')
         partner_application_part_4(driver, random_city, fake_identity)
         time.sleep(1)
         driver.find_element_by_xpath(
             '//*[@id="editTemplateMultipart-editForm-content-ftf-saveContinueCmdBottom"]').click()
         time.sleep(1)
+        print('Part 5')
         partner_application_part_5(driver, random_city, fake_identity)
         driver.find_element_by_xpath(
             '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
 
         time.sleep(1)
+        print('Part 6')
         partner_application_part_6(driver, random_city, fake_identity)
         driver.find_element_by_xpath(
             '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
-        driver.find_element_by_xpath(
-            '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
+        #driver.find_element_by_xpath(
+        #    '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
         time.sleep(1)
+        print('Part 7')
         application_part_4(driver, random_city, fake_identity)
         driver.find_element_by_xpath(
             '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
         time.sleep(1)
+        print('Part 8')
         application_part_5(driver, random_city, fake_identity)
         driver.find_element_by_xpath(
             '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
         time.sleep(1)
-        try:
-            element_present = expected_conditions.presence_of_element_located(
-                (By.ID, 'et-ef-content-ftf-gp-j_id_id16pc9-page_0-eSignatureBlock-cfrmsub-frm-dv_cs_esignature_FullName'))
-            WebDriverWait(driver, 10).until(element_present)
-        except TimeoutException:
-            print("Timed out waiting for page to load")
+        # try:
+        #     element_present = expected_conditions.presence_of_element_located(
+        #         (By.ID, 'et-ef-content-ftf-gp-j_id_id16pc9-page_0-eSignatureBlock-cfrmsub-frm-dv_cs_esignature_FullName'))
+        #     WebDriverWait(driver, 10).until(element_present)
+        # except TimeoutException:
+        #     print("Timed out waiting for page to load")
 
         driver.find_element_by_xpath(FULL_NAME).send_keys(
             fake_identity['first_name'] + " " + fake_identity['last_name'])
@@ -216,6 +225,8 @@ def fill_out_application_and_submit(driver, random_city, fake_identity):
         time.sleep(1)
         driver.find_element_by_xpath(SUBMIT_APP).click()
         time.sleep(2)
+        i += 1
+    print(i + " APPLICATIONS SENT")
         
         
 
@@ -251,8 +262,9 @@ def main():
         try:
             driver = start_driver(random_city)
         except Exception as e:
-            printf(f"FAILED TO START DRIVER: {e}")
-            pass
+            if not args.cloud:
+                printf(f"FAILED TO START DRIVER: {e}")
+            continue
 
 
         time.sleep(1)
@@ -271,20 +283,17 @@ def main():
             generate_account(driver, fake_identity)
         except Exception as e:
             printf(f"FAILED TO CREATE ACCOUNT: {e}")
-            pass
+            driver.close()
+            continue
 
 
         try:
             fill_out_application_and_submit(driver, random_city, fake_identity)
         except Exception as e:
             printf(f"FAILED TO FILL OUT APPLICATION AND SUBMIT: {e}")
-            pass
 
             driver.close()
-
             continue
-
-        driver.close()
 
 
 if __name__ == '__main__':
