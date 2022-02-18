@@ -1,5 +1,6 @@
 import argparse
 from datetime import date
+from re import I
 from apps.partnerapp import partner_application_part_3
 from constants.xPaths import *
 from constants.urls import *
@@ -52,7 +53,7 @@ fake = Faker()
 printf = functools.partial(print, flush=True)
 
 r = sr.Recognizer()
-i=0
+
 #Option parsing
 parser = argparse.ArgumentParser(SCRIPT_DESCRIPTION,epilog=EPILOG)
 parser.add_argument('--cloud',action='store_true',default=CLOUD_DISABLED,required=False,help=CLOUD_DESCRIPTION,dest='cloud')
@@ -111,7 +112,7 @@ def generate_account(driver, fake_identity):
     printf(f"Successfully made account for fake email {email}")
 
 
-def fill_out_application_and_submit(driver, random_city, fake_identity):
+def fill_out_application_and_submit(driver, random_city, fake_identity, i):
     
     if random_city == 'Memphis':
         print('Filling Applicaion for ' + random_city)
@@ -161,7 +162,7 @@ def fill_out_application_and_submit(driver, random_city, fake_identity):
         time.sleep(2)
 
         i += 1
-        print(i + " APPLICATION SENT")
+        print(str(i) + " APPLICATION SENT")
     elif random_city == 'Seattle':
         print('Filling Applicaion for ' + random_city)
         try:
@@ -171,10 +172,10 @@ def fill_out_application_and_submit(driver, random_city, fake_identity):
             driver.find_element_by_xpath(
                 '//*[@id="editTemplateMultipart-editForm-content-ftf-saveContinueCmdBottom"]').click()
         time.sleep(1)
-        print('Part 2')
+        #print('Part 2')
         partner_application_part_2(driver, random_city, fake_identity)
         time.sleep(1)
-        print('Part 3')
+        #print('Part 3')
         partner_application_part_3(driver, random_city, fake_identity)
 
         time.sleep(1)
@@ -182,31 +183,31 @@ def fill_out_application_and_submit(driver, random_city, fake_identity):
             '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
         time.sleep(1)
 
-        print('Part 4')
+        #print('Part 4')
         partner_application_part_4(driver, random_city, fake_identity)
         time.sleep(1)
         driver.find_element_by_xpath(
             '//*[@id="editTemplateMultipart-editForm-content-ftf-saveContinueCmdBottom"]').click()
         time.sleep(1)
-        print('Part 5')
+        #print('Part 5')
         partner_application_part_5(driver, random_city, fake_identity)
         driver.find_element_by_xpath(
             '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
 
         time.sleep(1)
-        print('Part 6')
+        #print('Part 6')
         partner_application_part_6(driver, random_city, fake_identity)
         driver.find_element_by_xpath(
             '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
         #driver.find_element_by_xpath(
         #    '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
         time.sleep(1)
-        print('Part 7')
+        #print('Part 7')
         application_part_4(driver, random_city, fake_identity)
         driver.find_element_by_xpath(
             '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
         time.sleep(1)
-        print('Part 8')
+        #print('Part 8')
         application_part_5(driver, random_city, fake_identity)
         driver.find_element_by_xpath(
             '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
@@ -226,7 +227,7 @@ def fill_out_application_and_submit(driver, random_city, fake_identity):
         driver.find_element_by_xpath(SUBMIT_APP).click()
         time.sleep(2)
         i += 1
-    print(i + " APPLICATIONS SENT")
+        print(str(i) + " APPLICATION SENT")
         
         
 
@@ -257,6 +258,7 @@ def random_email(name=None):
 
 
 def main():
+    i = 0
     while True:
         random_city = random.choice(list(CITIES_TO_URLS.keys()))
         try:
@@ -288,12 +290,13 @@ def main():
 
 
         try:
-            fill_out_application_and_submit(driver, random_city, fake_identity)
+            fill_out_application_and_submit(driver, random_city, fake_identity, i)
         except Exception as e:
             printf(f"FAILED TO FILL OUT APPLICATION AND SUBMIT: {e}")
 
             driver.close()
             continue
+        driver.close()
 
 
 if __name__ == '__main__':
