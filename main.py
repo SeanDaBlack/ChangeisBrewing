@@ -1,3 +1,4 @@
+import argparse
 from datetime import date
 from apps.partnerapp import partner_application_part_3
 from constants.xPaths import *
@@ -12,14 +13,12 @@ from constants.common import *
 from constants.functs import *
 from apps.baristaapp import *
 from apps.partnerapp import *
-import requests
 import functools
 import os
 import subprocess
 import random
 import sys
 import time
-import string
 from selenium.webdriver.chrome import options
 
 import speech_recognition as sr
@@ -54,10 +53,20 @@ printf = functools.partial(print, flush=True)
 
 r = sr.Recognizer()
 
-
+#Option parsing
+parser = argparse.ArgumentParser(SCRIPT_DESCRIPTION,epilog=EPILOG)
+parser.add_argument('--cloud',action='store_true',default=CLOUD_DISABLED,required=False,help=CLOUD_DESCRIPTION,dest='cloud')
+args = parser.parse_args()
 def start_driver(random_city):
 
-    driver = webdriver.Chrome(ChromeDriverManager().install())
+    if (args.cloud == CLOUD_ENABLED):
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--disable-dev-shm-usage')
+        driver = webdriver.Chrome('chromedriver',options=chrome_options)
+    else:
+        driver = webdriver.Chrome(ChromeDriverManager().install())
 
     driver.get(CITIES_TO_URLS[random_city])
     driver.implicitly_wait(10)
