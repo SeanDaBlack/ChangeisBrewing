@@ -53,7 +53,7 @@ def partner_application_part_4(driver, random_city, fake_identity):
     driver.find_element_by_xpath(UPLOAD_A_RESUME_BUTTON).send_keys(info)
 
     driver.find_element_by_xpath(ATTACH_RESUME).click()
-    
+
     os.remove(resume_filename+'.pdf')
 
 
@@ -77,24 +77,44 @@ def partner_application_part_2(driver, random_city, fake_identity):
 
     for key in XPATHS_2.keys():
     
-        match key:
-            case 'first_name':
-                info = fake_identity['first_name']
-                driver.find_element_by_xpath(XPATHS_2.get(key)).send_keys(info)
-            case 'perfered_first_name':
-                info = fake_identity['first_name']
-                driver.find_element_by_xpath(XPATHS_2.get(key)).send_keys(info)
-            case 'last_name':
-                info = fake_identity['last_name']
-                driver.find_element_by_xpath(XPATHS_2.get(key)).send_keys(info)
-            case 'zip':
-                info = random.choice(CITIES_TO_ZIP_CODES[random_city])
-                driver.find_element_by_xpath(XPATHS_2.get(key)).send_keys(info)
-            case 'pn':
-                info = random_phone(format=3)
-                driver.find_element_by_xpath(XPATHS_2.get(key)).send_keys(info)
-            case default:
-                pass
+        if (key is'first_name'):
+            info = fake_identity['first_name']
+            driver.find_element_by_xpath(XPATHS_2.get(key)).send_keys(info)
+        elif (key is'perfered_first_name'):
+            info = fake_identity['first_name']
+            driver.find_element_by_xpath(XPATHS_2.get(key)).send_keys(info)
+        elif (key is'last_name'):
+            info = fake_identity['last_name']
+            driver.find_element_by_xpath(XPATHS_2.get(key)).send_keys(info)
+        elif (key is'zip'):
+            info = random.choice(CITIES_TO_ZIP_CODES[random_city])
+            driver.find_element_by_xpath(XPATHS_2.get(key)).send_keys(info)
+        elif (key is'pn'):
+            info = random_phone(format=3)
+            driver.find_element_by_xpath(XPATHS_2.get(key)).send_keys(info)
+        else:
+            pass
+        
+        
+
+        # match key:
+        #     case 'first_name':
+        #         info = fake_identity['first_name']
+        #         driver.find_element_by_xpath(XPATHS_2.get(key)).send_keys(info)
+        #     case 'perfered_first_name':
+        #         info = fake_identity['first_name']
+        #         driver.find_element_by_xpath(XPATHS_2.get(key)).send_keys(info)
+        #     case 'last_name':
+        #         info = fake_identity['last_name']
+        #         driver.find_element_by_xpath(XPATHS_2.get(key)).send_keys(info)
+        #     case 'zip':
+        #         info = random.choice(CITIES_TO_ZIP_CODES[random_city])
+        #         driver.find_element_by_xpath(XPATHS_2.get(key)).send_keys(info)
+        #     case 'pn':
+        #         info = random_phone(format=3)
+        #         driver.find_element_by_xpath(XPATHS_2.get(key)).send_keys(info)
+        #     case default:
+        #         pass
 
     driver.find_element_by_xpath('//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
 

@@ -43,21 +43,35 @@ fake = Faker()
 def application_part_1(driver, random_city, fake_identity):
     for key in XPATHS_2.keys():
 
-        match key:
-            case 'first_name':
-                info = fake_identity['first_name']
-            case 'perfered_first_name':
-                info = fake_identity['first_name']
-            case 'last_name':
-                info = fake_identity['last_name']
-            case 'zip':
-                info = random.choice(CITIES_TO_ZIP_CODES[random_city])
-            case 'pn':
-                info = random_phone(format=3)
-            case 'work_experience_employer':
-                info = fake.company()
-            case 'work_experinece_title':
-                info = fake.job()
+        if (key is'first_name'):
+            info = fake_identity['first_name']
+        elif (key is'perfered_first_name'):
+            info = fake_identity['first_name']
+        elif (key is'last_name'):
+            info = fake_identity['last_name']
+        elif( key  is'zip'):
+            info = random.choice(CITIES_TO_ZIP_CODES[random_city])
+        elif (key  is'pn'):
+            info = random_phone(format=3)
+        elif (key  is'work_experience_employer'):
+            info = fake.company()
+        elif (key  is 'work_experinece_title'):
+            info = fake.job()
+        # match key:
+        #     case 'first_name':
+        #         info = fake_identity['first_name']
+        #     case 'perfered_first_name':
+        #         info = fake_identity['first_name']
+        #     case 'last_name':
+        #         info = fake_identity['last_name']
+        #     case 'zip':
+        #         info = random.choice(CITIES_TO_ZIP_CODES[random_city])
+        #     case 'pn':
+        #         info = random_phone(format=3)
+        #     case 'work_experience_employer':
+        #         info = fake.company()
+        #     case 'work_experinece_title':
+        #         info = fake.job()
 
         driver.find_element_by_xpath(XPATHS_2.get(key)).send_keys(info)
 
