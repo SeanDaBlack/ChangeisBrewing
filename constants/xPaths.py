@@ -119,3 +119,5 @@ SUBMIT_APP = '//*[@id="et-ef-content-ftf-submitCmdBottom"]'
 
 QUEST = '/html/body/div[3]/form/span/span[2]/span[4]/table/tbody/tr/td/span[5]/span/span/a/span[1]'
 QUEST_SUBMIT = '/html/body/form/div[4]/span/div[1]/div/div[2]/div/input'
+
+SUPER_QUAL = '//*[@id="et-ef-content-ftf-gp-j_id_id16pc9-page_0-preq-j_id_id7pc10-page__1-q-j_id_id2pc11-4-qr_com.taleo.functionalcomponent.prescreening.entity.question.PossibleAnswer__146937"]'
