@@ -14,6 +14,7 @@ from constants.common import *
 from constants.functs import *
 from apps.baristaapp import *
 from apps.partnerapp import *
+import requests
 import functools
 import os
 import subprocess
@@ -21,6 +22,7 @@ import random
 import sys
 import time
 from selenium.webdriver.chrome import options
+
 
 import speech_recognition as sr
 from faker import Faker
@@ -40,6 +42,7 @@ from password_generator import PasswordGenerator
 from webdriver_manager.chrome import ChromeDriverManager
 os.environ['WDM_LOG_LEVEL'] = '0'
 
+app_sent_url = 'https://change-is-brewing.herokuapp.com/applications'
 
 today = date.today()
 
@@ -118,23 +121,23 @@ def fill_out_application_and_submit(driver, random_city, fake_identity, i):
         print('Filling Applicaion for ' + random_city)
         application_part_1(driver, random_city, fake_identity)
         driver.find_element_by_xpath(CONTINUE).click()
-        time.sleep(1)
+        #time.sleep(1)
         application_part_2(driver, random_city, fake_identity,
                            UPLOAD_A_RESUME_BUTTON, ATTACH_RESUME)
         driver.find_element_by_xpath(CONTINUE2).click()
-        time.sleep(1)
+        #time.sleep(1)
         application_part_3(driver, random_city, fake_identity)
-        time.sleep(1)
+        #time.sleep(1)
         driver.find_element_by_xpath(CONTINUE).click()
         application_part_4(driver, random_city, fake_identity)
-        time.sleep(1)
+        #time.sleep(1)
         driver.find_element_by_xpath(CONTINUE).click()
         application_part_5(driver, random_city, fake_identity)
-        time.sleep(1)
+        #time.sleep(1)
         driver.find_element_by_xpath(CONTINUE).click()
-        time.sleep(1)
+        #time.sleep(1)
         driver.find_element_by_xpath(QUEST).click()
-        time.sleep(2)
+        #time.sleep(2)
 
         try:
             element_present = expected_conditions.presence_of_element_located(
@@ -157,9 +160,9 @@ def fill_out_application_and_submit(driver, random_city, fake_identity, i):
             fake_identity['first_name'] + " " + fake_identity['last_name'])
 
         driver.find_element_by_xpath(CONTINUE).click()
-        time.sleep(1)
+        #time.sleep(1)
         driver.find_element_by_xpath(SUBMIT_APP).click()
-        time.sleep(2)
+        #time.sleep(2)
 
 
     elif random_city == 'Seattle':
@@ -170,47 +173,47 @@ def fill_out_application_and_submit(driver, random_city, fake_identity, i):
         except:
             driver.find_element_by_xpath(
                 '//*[@id="editTemplateMultipart-editForm-content-ftf-saveContinueCmdBottom"]').click()
-        time.sleep(1)
+        #time.sleep(1)
         #print('Part 2')
         partner_application_part_2(driver, random_city, fake_identity)
-        time.sleep(1)
+        #time.sleep(1)
         #print('Part 3')
         partner_application_part_3(driver, random_city, fake_identity)
 
-        time.sleep(1)
+        #time.sleep(1)
         driver.find_element_by_xpath(
             '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
-        time.sleep(1)
+        #time.sleep(1)
 
         #print('Part 4')
         partner_application_part_4(driver, random_city, fake_identity)
-        time.sleep(1)
+        #time.sleep(1)
         driver.find_element_by_xpath(
             '//*[@id="editTemplateMultipart-editForm-content-ftf-saveContinueCmdBottom"]').click()
-        time.sleep(1)
+        #time.sleep(1)
         #print('Part 5')
         partner_application_part_5(driver, random_city, fake_identity)
         driver.find_element_by_xpath(
             '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
 
-        time.sleep(1)
+        #time.sleep(1)
         #print('Part 6')
         partner_application_part_6(driver, random_city, fake_identity)
         driver.find_element_by_xpath(
             '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
         #driver.find_element_by_xpath(
         #    '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
-        time.sleep(1)
+        #time.sleep(1)
         #print('Part 7')
         application_part_4(driver, random_city, fake_identity)
         driver.find_element_by_xpath(
             '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
-        time.sleep(1)
+        #time.sleep(1)
         #print('Part 8')
         application_part_5(driver, random_city, fake_identity)
         driver.find_element_by_xpath(
             '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
-        time.sleep(1)
+        #time.sleep(1)
         # try:
         #     element_present = expected_conditions.presence_of_element_located(
         #         (By.ID, 'et-ef-content-ftf-gp-j_id_id16pc9-page_0-eSignatureBlock-cfrmsub-frm-dv_cs_esignature_FullName'))
@@ -222,32 +225,32 @@ def fill_out_application_and_submit(driver, random_city, fake_identity, i):
             fake_identity['first_name'] + " " + fake_identity['last_name'])
 
         driver.find_element_by_xpath(CONTINUE).click()
-        time.sleep(1)
+        #time.sleep(1)
         driver.find_element_by_xpath(SUBMIT_APP).click()
-        time.sleep(2)
+        #time.sleep(2)
 
     elif random_city == 'Buffalo':
         print('Filling Applicaion for ' + random_city)
         application_part_1(driver, random_city, fake_identity)
         driver.find_element_by_xpath(CONTINUE).click()
-        time.sleep(1)
+        #time.sleep(1)
         application_part_2(driver, random_city, fake_identity,
                            UPLOAD_A_RESUME_BUTTON, ATTACH_RESUME)
         driver.find_element_by_xpath(CONTINUE2).click()
-        time.sleep(1)
+        #time.sleep(1)
         application_part_3(driver, random_city, fake_identity)
         driver.find_element_by_xpath(SUPER_QUAL).click()
-        time.sleep(1)
+        #time.sleep(1)
         driver.find_element_by_xpath(CONTINUE).click()
         application_part_4(driver, random_city, fake_identity)
-        time.sleep(1)
+        #time.sleep(1)
         driver.find_element_by_xpath(CONTINUE).click()
         application_part_5(driver, random_city, fake_identity)
-        time.sleep(1)
+        #time.sleep(1)
         driver.find_element_by_xpath(CONTINUE).click()
-        time.sleep(1)
+        #time.sleep(1)
         driver.find_element_by_xpath(QUEST).click()
-        time.sleep(2)
+        #time.sleep(2)
 
 
         try:
@@ -275,9 +278,9 @@ def fill_out_application_and_submit(driver, random_city, fake_identity, i):
             fake_identity['first_name'] + " " + fake_identity['last_name'])
 
         driver.find_element_by_xpath(CONTINUE).click()
-        time.sleep(1)
+        #time.sleep(1)
         driver.find_element_by_xpath(SUBMIT_APP).click()
-        time.sleep(2)
+        #time.sleep(2)
 
 
 
@@ -350,7 +353,8 @@ def main():
             continue
         driver.close()
         i+=1
-        print(str(i) + " APLICATIONS SENT")
+        requests.post(app_sent_url)
+        print(str(i) + " APPLICATIONS SENT")
 
 
 if __name__ == '__main__':
