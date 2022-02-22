@@ -12,7 +12,7 @@ CITIES_TO_ZIP_CODES = {
 
 CITIES_TO_URLS = {
     'Memphis': 'https://starbucks.taleo.net/careersection/1000222retail/jobdetail.ftl?job=210066205&lang=en&iniurl.src=OTH-11840',
-    'Seattle' : 'https://starbucks.taleo.net/careersection/1000222/jobdetail.ftl?job=220015649&lang=en',
+    'Seattle' : 'https://starbucks.taleo.net/careersection/jobdetail.ftl?job=220003195&lang=en#.YhUW6k9wwFc.link',
     'Buffalo' : 'https://starbucks.taleo.net/careersection/jobdetail.ftl?job=220006906&lang=en'
 }
 

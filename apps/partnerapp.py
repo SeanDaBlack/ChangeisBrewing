@@ -10,6 +10,7 @@ from constants.fileNames import *
 from constants.common import *
 from constants.functs import *
 from resume_faker import *
+from apps.baristaapp import *
 import requests
 import functools
 import os
@@ -39,6 +40,72 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 
 fake = Faker()
+
+def run_partner_app(driver, random_city, fake_identity):
+        print('Filling Applicaion for ' + random_city)
+        try:
+            driver.find_element_by_xpath(
+                '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
+        except:
+            driver.find_element_by_xpath(
+                '//*[@id="editTemplateMultipart-editForm-content-ftf-saveContinueCmdBottom"]').click()
+        #time.sleep(1)
+        #print('Part 2')
+        partner_application_part_2(driver, random_city, fake_identity)
+        #time.sleep(1)
+        #print('Part 3')
+        partner_application_part_3(driver, random_city, fake_identity)
+
+        #time.sleep(1)
+        driver.find_element_by_xpath(
+            '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
+        #time.sleep(1)
+
+        #print('Part 4')
+        partner_application_part_4(driver, random_city, fake_identity)
+        #time.sleep(1)
+        driver.find_element_by_xpath(
+            '//*[@id="editTemplateMultipart-editForm-content-ftf-saveContinueCmdBottom"]').click()
+        #time.sleep(1)
+        #print('Part 5')
+        partner_application_part_5(driver, random_city, fake_identity)
+        driver.find_element_by_xpath(
+            '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
+
+        #time.sleep(1)
+        #print('Part 6')
+        partner_application_part_6(driver, random_city, fake_identity)
+        driver.find_element_by_xpath(
+            '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
+        #driver.find_element_by_xpath(
+        #    '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
+        #time.sleep(1)
+        #print('Part 7')
+        application_part_4(driver, random_city, fake_identity)
+        driver.find_element_by_xpath(
+            '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
+        #time.sleep(1)
+        #print('Part 8')
+        application_part_5(driver, random_city, fake_identity)
+        driver.find_element_by_xpath(
+            '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
+        #time.sleep(1)
+        try:
+            element_present = expected_conditions.presence_of_element_located(
+                (By.ID, 'et-ef-content-ftf-gp-j_id_id16pc9-page_0-eSignatureBlock-cfrmsub-frm-dv_cs_esignature_FullName'))
+            WebDriverWait(driver, 10).until(element_present)
+        except TimeoutException:
+            print("Timed out waiting for page to load")
+
+        driver.find_element_by_xpath(FULL_NAME).send_keys(
+            fake_identity['first_name'] + " " + fake_identity['last_name'])
+
+        driver.find_element_by_xpath(CONTINUE).click()
+        #time.sleep(1)
+        driver.find_element_by_xpath(SUBMIT_APP).click()
+        #time.sleep(2)
+
+
 
 def partner_application_part_4(driver, random_city, fake_identity):
 
