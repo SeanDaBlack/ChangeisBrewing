@@ -214,12 +214,12 @@ def fill_out_application_and_submit(driver, random_city, fake_identity, i):
         driver.find_element_by_xpath(
             '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
         #time.sleep(1)
-        # try:
-        #     element_present = expected_conditions.presence_of_element_located(
-        #         (By.ID, 'et-ef-content-ftf-gp-j_id_id16pc9-page_0-eSignatureBlock-cfrmsub-frm-dv_cs_esignature_FullName'))
-        #     WebDriverWait(driver, 10).until(element_present)
-        # except TimeoutException:
-        #     print("Timed out waiting for page to load")
+        try:
+            element_present = expected_conditions.presence_of_element_located(
+                (By.ID, 'et-ef-content-ftf-gp-j_id_id16pc9-page_0-eSignatureBlock-cfrmsub-frm-dv_cs_esignature_FullName'))
+            WebDriverWait(driver, 10).until(element_present)
+        except TimeoutException:
+            print("Timed out waiting for page to load")
 
         driver.find_element_by_xpath(FULL_NAME).send_keys(
             fake_identity['first_name'] + " " + fake_identity['last_name'])
@@ -358,5 +358,6 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
-    sys.exit()
+    for i in range(1800):
+        requests.post(app_sent_url)
+    #sys.exit()
