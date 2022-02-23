@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  starbuster:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: 'python main.py --remote-url="http://chrome:4444"'
+    depends_on:
+      - chrome
+    volumes:
+      - './main.py:/usr/src/app/main.py'
+
+  chrome:
+    image: selenium/standalone-chrome:98.0
