@@ -73,7 +73,8 @@ def start_driver(random_city):
     else:
         driver = webdriver.Chrome(ChromeDriverManager().install())
 
-    driver.get(CITIES_TO_URLS[random_city])
+
+    driver.get(CITIES_TO_URLS[random_city][random.randint(0, len(CITIES_TO_URLS[random_city]))])
     driver.implicitly_wait(10)
     WebDriverWait(driver, 10).until(
         expected_conditions.presence_of_element_located((By.XPATH, APPLY_NOW_BUTTON_1)))
@@ -118,7 +119,7 @@ def generate_account(driver, fake_identity):
 
 def fill_out_application_and_submit(driver, random_city, fake_identity, i):
     
-    if random_city == 'Memphis':
+    if random_city == 'Memphis' or 'Philadelphia':
         print('Filling Applicaion for ' + random_city)
         application_part_1(driver, random_city, fake_identity)
         driver.find_element_by_xpath(CONTINUE).click()
