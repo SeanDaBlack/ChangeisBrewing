@@ -252,6 +252,9 @@ def main():
         try:
             fill_out_application_and_submit(driver, random_city, fake_identity, i)
         except Exception as e:
+            if(e == 'Message: stale element reference: element is not attached to the page document'):
+                break
+            
             printf(f"FAILED TO FILL OUT APPLICATION AND SUBMIT: {e}")
 
             driver.close()
