@@ -214,8 +214,10 @@ def partner_application_part_5(driver, random_city, fake_identity):
         driver.find_element_by_xpath('//*[@id="et-ef-content-ftf-gp-j_id_id16pc9-page_0-preq-j_id_id7pc10-page__1-q-j_id_id2pc11-5-qr_com.taleo.functionalcomponent.prescreening.entity.question.PossibleAnswer__205255"]').click()
 
     if(random.randint(0,100) > 50):
-        driver.find_element_by_xpath('//*[@id="et-ef-content-ftf-gp-j_id_id16pc9-page_0-preq-j_id_id7pc10-page__1-q-j_id_id2pc11-5-qr_com.taleo.functionalcomponent.prescreening.entity.question.PossibleAnswer__205256"]').click()
-        
+        try:
+            driver.find_element_by_xpath('//*[@id="et-ef-content-ftf-gp-j_id_id16pc9-page_0-preq-j_id_id7pc10-page__1-q-j_id_id2pc11-5-qr_com.taleo.functionalcomponent.prescreening.entity.question.PossibleAnswer__205256"]').click()
+        except:    
+            driver.find_element_by_xpath('//*[@id="et-ef-content-ftf-gp-j_id_id16pc9-page_0-preq-j_id_id7pc10-page__1-q-j_id_id2pc11-6-qr_com.taleo.functionalcomponent.prescreening.entity.question.PossibleAnswer__205257"]').click()
     else:
         driver.find_element_by_xpath('//*[@id="et-ef-content-ftf-gp-j_id_id16pc9-page_0-preq-j_id_id7pc10-page__1-q-j_id_id2pc11-6-qr_com.taleo.functionalcomponent.prescreening.entity.question.PossibleAnswer__205257"]').click()
 
