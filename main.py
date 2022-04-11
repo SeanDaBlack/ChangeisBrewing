@@ -15,6 +15,7 @@ from constants.common import *
 from constants.functs import *
 from apps.baristaapp import *
 from apps.partnerapp import *
+from apps.remoteapp import *
 import requests
 import functools
 import os
@@ -129,7 +130,7 @@ def generate_account(driver, fake_identity):
 
 def fill_out_application_and_submit(driver, random_city, fake_identity, i):
     
-    if random_city == 'Memphis' or 'Philadelphia':
+    if ((random_city == 'Memphis') or (random_city == 'Philadelphia')):
         print('Filling Applicaion for ' + random_city)
         application_part_1(driver, random_city, fake_identity)
         driver.find_element_by_xpath(CONTINUE).click()
@@ -175,13 +176,15 @@ def fill_out_application_and_submit(driver, random_city, fake_identity, i):
         #time.sleep(1)
         driver.find_element_by_xpath(SUBMIT_APP).click()
         #time.sleep(2)
-
-
     elif random_city == 'Seattle':
         shift_super_app(driver, random_city, fake_identity)
 
     elif random_city == 'Buffalo':
         shift_super_app(driver, random_city, fake_identity)
+    else:
+        #print(city)
+        run_partner_app(driver, city, fake_identity)
+        #remote_app(driver, city, fake_identity)
 
 
 
@@ -216,6 +219,7 @@ def random_email(name=None):
 def main():
     i = 0
     while True:
+        
         random_city = random.choice(list(CITIES_TO_URLS.keys()))
         try:
             driver = start_driver(random_city)
@@ -255,6 +259,7 @@ def main():
         driver.close()
         i+=1
         requests.post(app_sent_url)
+        
         print(str(i) + " APPLICATIONS SENT")
 
 

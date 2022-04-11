@@ -38,72 +38,75 @@ from password_generator import PasswordGenerator
 
 from webdriver_manager.chrome import ChromeDriverManager
 
-
+engine = SearchEngine()
 fake = Faker()
 
 def run_partner_app(driver, random_city, fake_identity):
-        print('Filling Applicaion for ' + random_city)
-        try:
-            driver.find_element_by_xpath(
-                '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
-        except:
-            driver.find_element_by_xpath(
-                '//*[@id="editTemplateMultipart-editForm-content-ftf-saveContinueCmdBottom"]').click()
-        #time.sleep(1)
-        #print('Part 2')
-        partner_application_part_2(driver, random_city, fake_identity)
-        #time.sleep(1)
-        #print('Part 3')
-        partner_application_part_3(driver, random_city, fake_identity)
-
-        #time.sleep(1)
+    print('Filling Applicaion for ' + random_city)
+    try:
         driver.find_element_by_xpath(
             '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
-        #time.sleep(1)
-
-        #print('Part 4')
-        partner_application_part_4(driver, random_city, fake_identity)
-        #time.sleep(1)
+    except:
         driver.find_element_by_xpath(
             '//*[@id="editTemplateMultipart-editForm-content-ftf-saveContinueCmdBottom"]').click()
-        #time.sleep(1)
-        #print('Part 5')
-        partner_application_part_5(driver, random_city, fake_identity)
-        driver.find_element_by_xpath(
-            '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
+    #time.sleep(1)
+    #print('Part 2')
+    partner_application_part_2(driver, random_city, fake_identity)
+    #time.sleep(1)
+    #print('Part 3')
+    partner_application_part_3(driver, random_city, fake_identity)
 
-        #time.sleep(1)
-        #print('Part 6')
-        partner_application_part_6(driver, random_city, fake_identity)
-        driver.find_element_by_xpath(
-            '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
-        #driver.find_element_by_xpath(
-        #    '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
-        #time.sleep(1)
-        #print('Part 7')
-        application_part_4(driver, random_city, fake_identity)
-        driver.find_element_by_xpath(
-            '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
-        #time.sleep(1)
-        #print('Part 8')
-        application_part_5(driver, random_city, fake_identity)
-        driver.find_element_by_xpath(
-            '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
-        #time.sleep(1)
-        try:
-            element_present = expected_conditions.presence_of_element_located(
-                (By.ID, 'et-ef-content-ftf-gp-j_id_id16pc9-page_0-eSignatureBlock-cfrmsub-frm-dv_cs_esignature_FullName'))
-            WebDriverWait(driver, 10).until(element_present)
-        except TimeoutException:
-            print("Timed out waiting for page to load")
+    #time.sleep(1)
+    driver.find_element_by_xpath(
+        '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
+    #time.sleep(1)
 
-        driver.find_element_by_xpath(FULL_NAME).send_keys(
-            fake_identity['first_name'] + " " + fake_identity['last_name'])
+    #print('Part 4')
+    partner_application_part_4(driver, random_city, fake_identity)
+    #time.sleep(1)
+    driver.find_element_by_xpath(
+        '//*[@id="editTemplateMultipart-editForm-content-ftf-saveContinueCmdBottom"]').click()
+    time.sleep(3)
+    #print('Part 5')
 
-        driver.find_element_by_xpath(CONTINUE).click()
-        #time.sleep(1)
-        driver.find_element_by_xpath(SUBMIT_APP).click()
-        #time.sleep(2)
+    
+
+    partner_application_part_5(driver, random_city, fake_identity)
+    driver.find_element_by_xpath(
+        '//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
+
+    application_part_4(driver, random_city, fake_identity)
+    driver.find_element_by_xpath(CONTINUE).click()
+    application_part_5(driver, random_city, fake_identity)
+    driver.find_element_by_xpath(CONTINUE).click()
+
+    driver.find_element_by_xpath(QUEST).click()
+
+    # application_part_6(driver, random_city, fake_identity)
+    #time.sleep(1)
+    try:
+        element_present = expected_conditions.presence_of_element_located(
+            (By.ID, 'SurveyControl_SurveySubmit'))
+        WebDriverWait(driver, 10).until(element_present)
+    except TimeoutException:
+        print("Timed out waiting for page to load")
+
+    application_part_6(driver, random_city, fake_identity)
+    driver.find_element_by_xpath(QUEST_SUBMIT).click()
+
+    try:
+        element_present = expected_conditions.presence_of_element_located(
+            (By.ID, 'et-ef-content-ftf-gp-j_id_id16pc9-page_0-eSignatureBlock-cfrmsub-frm-dv_cs_esignature_FullName'))
+        WebDriverWait(driver, 10).until(element_present)
+    except TimeoutException:
+        print("Timed out waiting for page to load")
+
+    driver.find_element_by_xpath(FULL_NAME).send_keys(
+        fake_identity['first_name'] + " " + fake_identity['last_name'])
+
+    driver.find_element_by_xpath(CONTINUE).click()
+    #time.sleep(1)
+    driver.find_element_by_xpath(SUBMIT_APP).click()
 
 
 
@@ -154,7 +157,7 @@ def partner_application_part_2(driver, random_city, fake_identity):
             info = fake_identity['last_name']
             driver.find_element_by_xpath(XPATHS_2.get(key)).send_keys(info)
         elif (key is'zip'):
-            info = random.choice(CITIES_TO_ZIP_CODES[random_city])
+            info = random.choice(list(engine.by_city(city=random_city))).zipcode
             driver.find_element_by_xpath(XPATHS_2.get(key)).send_keys(info)
         elif (key is'pn'):
             info = random_phone(format=3)
@@ -164,24 +167,6 @@ def partner_application_part_2(driver, random_city, fake_identity):
         
         
 
-        # match key:
-        #     case 'first_name':
-        #         info = fake_identity['first_name']
-        #         driver.find_element_by_xpath(XPATHS_2.get(key)).send_keys(info)
-        #     case 'perfered_first_name':
-        #         info = fake_identity['first_name']
-        #         driver.find_element_by_xpath(XPATHS_2.get(key)).send_keys(info)
-        #     case 'last_name':
-        #         info = fake_identity['last_name']
-        #         driver.find_element_by_xpath(XPATHS_2.get(key)).send_keys(info)
-        #     case 'zip':
-        #         info = random.choice(CITIES_TO_ZIP_CODES[random_city])
-        #         driver.find_element_by_xpath(XPATHS_2.get(key)).send_keys(info)
-        #     case 'pn':
-        #         info = random_phone(format=3)
-        #         driver.find_element_by_xpath(XPATHS_2.get(key)).send_keys(info)
-        #     case default:
-        #         pass
 
     driver.find_element_by_xpath('//*[@id="et-ef-content-ftf-saveContinueCmdBottom"]').click()
 
@@ -213,8 +198,26 @@ def partner_application_part_3(driver, random_city, fake_identity):
 
 
 def partner_application_part_5(driver, random_city, fake_identity):
-    driver.find_element_by_xpath('//*[@id="et-ef-content-ftf-gp-j_id_id16pc9-page_0-preq-j_id_id7pc10-page__1-q-j_id_id2pc11-0-qr_com.taleo.functionalcomponent.prescreening.entity.question.PossibleAnswer__5166"]').click()
-    driver.find_element_by_xpath('//*[@id="et-ef-content-ftf-gp-j_id_id16pc9-page_0-preq-j_id_id7pc10-page__1-q-j_id_id2pc11-1-qr_com.taleo.functionalcomponent.prescreening.entity.question.PossibleAnswer__15815"]').click()
+    driver.find_element_by_xpath('//*[@id="et-ef-content-ftf-gp-j_id_id16pc9-page_0-preq-j_id_id7pc10-page__1-q-j_id_id2pc11-0-qr_com.taleo.functionalcomponent.prescreening.entity.question.PossibleAnswer__15816"]').click()
+    driver.find_element_by_xpath('//*[@id="et-ef-content-ftf-gp-j_id_id16pc9-page_0-preq-j_id_id7pc10-page__1-q-j_id_id2pc11-1-qr_com.taleo.functionalcomponent.prescreening.entity.question.PossibleAnswer__5166"]').click()
+
+    driver.find_element_by_xpath('//*[@id="et-ef-content-ftf-gp-j_id_id16pc9-page_0-preq-j_id_id7pc10-page__1-q-j_id_id2pc11-2-qc_com.taleo.functionalcomponent.prescreening.entity.question.PossibleAnswer__6045"]').click()
+    driver.find_element_by_xpath('//*[@id="et-ef-content-ftf-gp-j_id_id16pc9-page_0-preq-j_id_id7pc10-page__1-q-j_id_id2pc11-2-qc_com.taleo.functionalcomponent.prescreening.entity.question.PossibleAnswer__6049"]').click()
+
+
+    driver.find_element_by_xpath('//*[@id="et-ef-content-ftf-gp-j_id_id16pc9-page_0-preq-j_id_id7pc10-page__1-q-j_id_id2pc11-3-qr_com.taleo.functionalcomponent.prescreening.entity.question.PossibleAnswer__7223"]').click()
+    driver.find_element_by_xpath('//*[@id="et-ef-content-ftf-gp-j_id_id16pc9-page_0-preq-j_id_id7pc10-page__1-q-j_id_id2pc11-4-qr_com.taleo.functionalcomponent.prescreening.entity.question.PossibleAnswer__7995"]').click()
+    if(random.randint(0,100) > 50):
+        driver.find_element_by_xpath('//*[@id="et-ef-content-ftf-gp-j_id_id16pc9-page_0-preq-j_id_id7pc10-page__1-q-j_id_id2pc11-5-qr_com.taleo.functionalcomponent.prescreening.entity.question.PossibleAnswer__205254"]').click()
+        
+    else:    
+        driver.find_element_by_xpath('//*[@id="et-ef-content-ftf-gp-j_id_id16pc9-page_0-preq-j_id_id7pc10-page__1-q-j_id_id2pc11-5-qr_com.taleo.functionalcomponent.prescreening.entity.question.PossibleAnswer__205255"]').click()
+
+    if(random.randint(0,100) > 50):
+        driver.find_element_by_xpath('//*[@id="et-ef-content-ftf-gp-j_id_id16pc9-page_0-preq-j_id_id7pc10-page__1-q-j_id_id2pc11-5-qr_com.taleo.functionalcomponent.prescreening.entity.question.PossibleAnswer__205256"]').click()
+        
+    else:
+        driver.find_element_by_xpath('//*[@id="et-ef-content-ftf-gp-j_id_id16pc9-page_0-preq-j_id_id7pc10-page__1-q-j_id_id2pc11-6-qr_com.taleo.functionalcomponent.prescreening.entity.question.PossibleAnswer__205257"]').click()
 
 
 def partner_application_part_6(driver, random_city, fake_identity):
