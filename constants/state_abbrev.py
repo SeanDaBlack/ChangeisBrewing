@@ -99,7 +99,7 @@ capital_dic={
     'Pennsylvania': 'Harrisburg',
     'Rhoda Island': 'Providence',
     'South Carolina': 'Columbia',
-    'South Dakoda': 'Pierre',
+    'South Dakota': 'Pierre',
     'Tennessee': 'Nashville',
     'Texas': 'Austin',
     'Utah': 'Salt Lake City',
