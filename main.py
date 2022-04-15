@@ -130,7 +130,7 @@ def generate_account(driver, fake_identity):
 
 def fill_out_application_and_submit(driver, random_city, fake_identity, i):
     
-    if ((random_city == 'Memphis') or (random_city == 'Philadelphia')):
+    if ((random_city == 'Ithaca') or (random_city == 'Philadelphia')):
         print('Filling Applicaion for ' + random_city)
         application_part_1(driver, random_city, fake_identity)
         driver.find_element_by_xpath(CONTINUE).click()
@@ -161,6 +161,9 @@ def fill_out_application_and_submit(driver, random_city, fake_identity, i):
 
         application_part_6(driver, random_city, fake_identity)
         driver.find_element_by_xpath(QUEST_SUBMIT).click()
+        partner_application_part_6(driver, random_city, fake_identity)
+        partner_application_part_6(driver, random_city, fake_identity)
+        driver.find_element_by_xpath(CONTINUE).click()
 
         try:
             element_present = expected_conditions.presence_of_element_located(
@@ -176,7 +179,7 @@ def fill_out_application_and_submit(driver, random_city, fake_identity, i):
         #time.sleep(1)
         driver.find_element_by_xpath(SUBMIT_APP).click()
         #time.sleep(2)
-    elif random_city == 'Seattle':
+    elif random_city == 'Elmira':
         shift_super_app(driver, random_city, fake_identity)
 
     elif random_city == 'Buffalo':
