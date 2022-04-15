@@ -185,9 +185,9 @@ def fill_out_application_and_submit(driver, random_city, fake_identity, i):
     elif random_city == 'Buffalo':
         shift_super_app(driver, random_city, fake_identity)
     else:
-        #print(city)
-        run_partner_app(driver, city, fake_identity)
+        #run_partner_app(driver, city, fake_identity)
         #remote_app(driver, city, fake_identity)
+        pass
 
 
 
@@ -227,8 +227,8 @@ def main():
         try:
             driver = start_driver(random_city)
         except Exception as e:
-            #if not args.cloud:
-            printf(f"FAILED TO START DRIVER: {e}")
+            if not args.cloud:
+                printf(f"FAILED TO START DRIVER: {e}")
             continue
 
 
@@ -255,8 +255,7 @@ def main():
         try:
             fill_out_application_and_submit(driver, random_city, fake_identity, i)
         except Exception as e:
-            if(e == 'Message: stale element reference: element is not attached to the page document'):
-                break
+
             
             printf(f"FAILED TO FILL OUT APPLICATION AND SUBMIT: {e}")
 
