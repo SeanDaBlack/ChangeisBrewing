@@ -9,5 +9,5 @@ SpeechRecognition==3.8.1
 pydub==0.25.1
 random-password-generator==2.2.0
 folium==0.2.1
-# barnum==0.5.1
-# uszipcode==1.0.1
+barnum==0.5.1
+uszipcode==1.0.1
