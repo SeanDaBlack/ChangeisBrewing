@@ -94,7 +94,6 @@ def start_driver(random_city):
     driver.find_element_by_xpath(NEW_CANIDATE_BUTTON).click()
     return driver
 
-
 def generate_account(driver, fake_identity):
     # make fake account info and fill
 
@@ -127,10 +126,9 @@ def generate_account(driver, fake_identity):
 
     printf(f"Successfully made account for fake email {email}")
 
-
 def fill_out_application_and_submit(driver, random_city, fake_identity, i):
     
-    if ((random_city == 'Ithaca') or (random_city == 'Philadelphia')):
+    if ((random_city == 'Memphis') or (random_city == 'Philadelphia')):
         print('Filling Applicaion for ' + random_city)
         application_part_1(driver, random_city, fake_identity)
         driver.find_element_by_xpath(CONTINUE).click()
@@ -189,11 +187,6 @@ def fill_out_application_and_submit(driver, random_city, fake_identity, i):
         #remote_app(driver, city, fake_identity)
         pass
 
-
-
-        
-
-
 def random_email(name=None):
     if name is None:
         name = fake.name()
@@ -217,7 +210,6 @@ def random_email(name=None):
 
     return random.choices(mailGens, MAIL_GENERATION_WEIGHTS)[0](*name.split(" ")).lower() + "@" + \
         random.choices(EMAIL_DATA, emailChoices)[0][1]
-
 
 def main():
     i = 0
