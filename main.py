@@ -62,6 +62,7 @@ r = sr.Recognizer()
 #Option parsing
 parser = argparse.ArgumentParser(SCRIPT_DESCRIPTION,epilog=EPILOG)
 parser.add_argument('--cloud',action='store_true',default=CLOUD_DISABLED,required=False,help=CLOUD_DESCRIPTION,dest='cloud')
+parser.add_argument('--remote-url',default='',required=False,help='The URL to an external Selenium driver',dest='remoteURL')
 args = parser.parse_args()
 def start_driver(random_city):
 
@@ -79,6 +80,12 @@ def start_driver(random_city):
         chrome_options.add_argument(f'user-agent={user_agent}')
 
         driver = webdriver.Chrome('chromedriver',options=chrome_options)
+    elif (len(args.remoteURL) != 0):
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--disable-dev-shm-usage')
+        driver = webdriver.Remote(args.remoteURL, options=chrome_options)
     else:
         driver = webdriver.Chrome(ChromeDriverManager().install())
 
