@@ -59,10 +59,13 @@ printf = functools.partial(print, flush=True)
 
 r = sr.Recognizer()
 
-#Option parsing
-parser = argparse.ArgumentParser(SCRIPT_DESCRIPTION,epilog=EPILOG)
-parser.add_argument('--cloud',action='store_true',default=CLOUD_DISABLED,required=False,help=CLOUD_DESCRIPTION,dest='cloud')
+# Option parsing
+parser = argparse.ArgumentParser(SCRIPT_DESCRIPTION, epilog=EPILOG)
+parser.add_argument('--cloud', action='store_true', default=CLOUD_DISABLED,
+                    required=False, help=CLOUD_DESCRIPTION, dest='cloud')
 args = parser.parse_args()
+
+
 def start_driver(random_city):
 
     if (args.cloud == CLOUD_ENABLED):
@@ -78,21 +81,22 @@ def start_driver(random_city):
         user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36'
         chrome_options.add_argument(f'user-agent={user_agent}')
 
-        driver = webdriver.Chrome('chromedriver',options=chrome_options)
+        driver = webdriver.Chrome('chromedriver', options=chrome_options)
     else:
         driver = webdriver.Chrome(ChromeDriverManager().install())
 
-
-    driver.get(CITIES_TO_URLS[random_city][random.randint(0, (len(CITIES_TO_URLS[random_city])-1))])
+    driver.get(CITIES_TO_URLS[random_city][random.randint(
+        0, (len(CITIES_TO_URLS[random_city])-1))])
     driver.implicitly_wait(10)
     WebDriverWait(driver, 10).until(
-      expected_conditions.presence_of_element_located((By.XPATH, APPLY_NOW_BUTTON_1)))
-    
+        expected_conditions.presence_of_element_located((By.XPATH, APPLY_NOW_BUTTON_1)))
+
     driver.implicitly_wait(10)
     driver.find_element_by_xpath(APPLY_NOW_BUTTON_1).click()
     driver.find_element_by_xpath(PRIVACY_ACCEPT).click()
     driver.find_element_by_xpath(NEW_CANIDATE_BUTTON).click()
     return driver
+
 
 def generate_account(driver, fake_identity):
     # make fake account info and fill
@@ -126,29 +130,30 @@ def generate_account(driver, fake_identity):
 
     printf(f"Successfully made account for fake email {email}")
 
+
 def fill_out_application_and_submit(driver, random_city, fake_identity, i):
-    
-    if ((random_city == 'Memphis') or (random_city == 'Philadelphia')):
+
+    if ((random_city == 'Anchorage') or (random_city == 'Philadelphia')):
         print('Filling Applicaion for ' + random_city)
         application_part_1(driver, random_city, fake_identity)
         driver.find_element_by_xpath(CONTINUE).click()
-        #time.sleep(1)
+        # time.sleep(1)
         application_part_2(driver, random_city, fake_identity,
                            UPLOAD_A_RESUME_BUTTON, ATTACH_RESUME)
         driver.find_element_by_xpath(CONTINUE2).click()
-        #time.sleep(1)
+        # time.sleep(1)
         application_part_3(driver, random_city, fake_identity)
-        #time.sleep(1)
+        # time.sleep(1)
         driver.find_element_by_xpath(CONTINUE).click()
         application_part_4(driver, random_city, fake_identity)
-        #time.sleep(1)
+        # time.sleep(1)
         driver.find_element_by_xpath(CONTINUE).click()
         application_part_5(driver, random_city, fake_identity)
-        #time.sleep(1)
+        # time.sleep(1)
         driver.find_element_by_xpath(CONTINUE).click()
-        #time.sleep(1)
+        # time.sleep(1)
         driver.find_element_by_xpath(QUEST).click()
-        #time.sleep(2)
+        # time.sleep(2)
 
         try:
             element_present = expected_conditions.presence_of_element_located(
@@ -174,9 +179,9 @@ def fill_out_application_and_submit(driver, random_city, fake_identity, i):
             fake_identity['first_name'] + " " + fake_identity['last_name'])
 
         driver.find_element_by_xpath(CONTINUE).click()
-        #time.sleep(1)
+        # time.sleep(1)
         driver.find_element_by_xpath(SUBMIT_APP).click()
-        #time.sleep(2)
+        # time.sleep(2)
     elif random_city == 'Elmira':
         shift_super_app(driver, random_city, fake_identity)
 
@@ -186,6 +191,7 @@ def fill_out_application_and_submit(driver, random_city, fake_identity, i):
         #run_partner_app(driver, city, fake_identity)
         #remote_app(driver, city, fake_identity)
         pass
+
 
 def random_email(name=None):
     if name is None:
@@ -211,10 +217,11 @@ def random_email(name=None):
     return random.choices(mailGens, MAIL_GENERATION_WEIGHTS)[0](*name.split(" ")).lower() + "@" + \
         random.choices(EMAIL_DATA, emailChoices)[0][1]
 
+
 def main():
     i = 0
     while True:
-        
+
         random_city = random.choice(list(CITIES_TO_URLS.keys()))
         try:
             driver = start_driver(random_city)
@@ -222,7 +229,6 @@ def main():
             if not args.cloud:
                 printf(f"FAILED TO START DRIVER: {e}")
             continue
-
 
         time.sleep(1)
 
@@ -243,23 +249,22 @@ def main():
             driver.close()
             continue
 
-
         try:
-            fill_out_application_and_submit(driver, random_city, fake_identity, i)
+            fill_out_application_and_submit(
+                driver, random_city, fake_identity, i)
         except Exception as e:
 
-            
             printf(f"FAILED TO FILL OUT APPLICATION AND SUBMIT: {e}")
 
             driver.close()
             continue
         driver.close()
-        i+=1
+        i += 1
         requests.post(app_sent_url)
-        
+
         print(str(i) + " APPLICATIONS SENT")
 
 
 if __name__ == '__main__':
     main()
-    #sys.exit()
+    # sys.exit()
