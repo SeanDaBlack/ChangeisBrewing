@@ -13,13 +13,14 @@ CITIES_TO_STATES = {
     'Elmira': 'New York',
     'Seattle': 'Washington',
     'Ithaca': 'New York',
-    'Anchorage': 'Alaska'
+    'Anchorage': 'Alaska',
+    'Bakersfield': 'California',
     # city: cap_to_state[city],
 
 }
 
 CITIES_TO_ZIP_CODES = {
-    'Memphis': ['14901', '14902', '14904', '14905'],
+    'Bakersfield': ['93308'],
     'Elmira': ['14901', '14902', '14904', '14905'],
     'Seattle': ['98101', '98102', '98103', '98114', '98117', '98122'],
     'Ithaca': ['14850', '14851', '14852'],
@@ -31,7 +32,7 @@ CITIES_TO_ZIP_CODES = {
 }
 
 CITIES_TO_URLS = {
-    'Anchorage': ['https://starbucks.taleo.net/careersection/jobdetail.ftl?job=220038787&lang=en#.YpTq2ifn5zQ.link'],
+    'Bakersfield': ['https://starbucks.taleo.net/careersection/1000222retail/jobdetail.ftl?job=220049835&lang=en&src=JB-12106'],
     # 'Seattle' : ['https://starbucks.taleo.net/careersection/jobdetail.ftl?job=220003195&lang=en#.YhUW6k9wwFc.link'],
     # 'Elmira' : ['https://starbucks.taleo.net/careersection/jobdetail.ftl?job=220008435&lang=en',
     #                    'https://starbucks.taleo.net/careersection/jobdetail.ftl?job=220011416&lang=en',

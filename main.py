@@ -71,7 +71,6 @@ def start_driver(random_city):
     if (args.cloud == CLOUD_ENABLED):
 
         chrome_options = webdriver.ChromeOptions()
-        chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--disable-dev-shm-usage')
@@ -133,7 +132,7 @@ def generate_account(driver, fake_identity):
 
 def fill_out_application_and_submit(driver, random_city, fake_identity, i):
 
-    if ((random_city == 'Anchorage') or (random_city == 'Philadelphia')):
+    if ((random_city == 'Bakersfield') or (random_city == 'Philadelphia')):
         print('Filling Applicaion for ' + random_city)
         application_part_1(driver, random_city, fake_identity)
         driver.find_element_by_xpath(CONTINUE).click()
@@ -179,7 +178,7 @@ def fill_out_application_and_submit(driver, random_city, fake_identity, i):
             fake_identity['first_name'] + " " + fake_identity['last_name'])
 
         driver.find_element_by_xpath(CONTINUE).click()
-        # time.sleep(1)
+
         driver.find_element_by_xpath(SUBMIT_APP).click()
         # time.sleep(2)
     elif random_city == 'Elmira':
@@ -218,8 +217,16 @@ def random_email(name=None):
         random.choices(EMAIL_DATA, emailChoices)[0][1]
 
 
+def pickZipCodes(rand_city):
+
+    rand_zip = random.choice(CITIES_TO_ZIP_CODES[rand_city])
+
+    return rand_zip
+
+
 def main():
     i = 0
+
     while True:
 
         random_city = random.choice(list(CITIES_TO_URLS.keys()))
@@ -259,12 +266,17 @@ def main():
             driver.close()
             continue
         driver.close()
+
         i += 1
+
         requests.post(app_sent_url)
 
         print(str(i) + " APPLICATIONS SENT")
 
 
 if __name__ == '__main__':
+
+    name = fake.name()
+
     main()
-    # sys.exit()
+    sys.exit()
