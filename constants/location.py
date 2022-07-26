@@ -35,7 +35,7 @@ CITIES_TO_ZIP_CODES = {
 
 CITIES_TO_URLS = {
     'Bakersfield': ['https://starbucks.taleo.net/careersection/1000222retail/jobdetail.ftl?job=220049835&lang=en&src=JB-12106'],
-    'Raleigh': ['https://starbucks.taleo.net/careersection/1000222retail/jobdetail.ftl?job=220041376&lang=en'],
+    # 'Raleigh': ['https://starbucks.taleo.net/careersection/1000222retail/jobdetail.ftl?job=220049835&lang=en&src=JB-12106'],
     # 'Seattle' : ['https://starbucks.taleo.net/careersection/jobdetail.ftl?job=220003195&lang=en#.YhUW6k9wwFc.link'],
     # 'Elmira' : ['https://starbucks.taleo.net/careersection/jobdetail.ftl?job=220008435&lang=en',
     #                    'https://starbucks.taleo.net/careersection/jobdetail.ftl?job=220011416&lang=en',
