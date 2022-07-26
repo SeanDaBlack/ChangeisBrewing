@@ -163,8 +163,11 @@ def fill_out_application_and_submit(driver, random_city, fake_identity, i):
 
         application_part_6(driver, random_city, fake_identity)
         driver.find_element_by_xpath(QUEST_SUBMIT).click()
-        partner_application_part_6(driver, random_city, fake_identity)
-        partner_application_part_6(driver, random_city, fake_identity)
+        try:
+            partner_application_part_6(driver, random_city, fake_identity)
+        #partner_application_part_6(driver, random_city, fake_identity)
+        except:
+            pass
         driver.find_element_by_xpath(CONTINUE).click()
 
         try:
