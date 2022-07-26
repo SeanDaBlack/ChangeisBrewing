@@ -132,7 +132,7 @@ def generate_account(driver, fake_identity):
 
 def fill_out_application_and_submit(driver, random_city, fake_identity, i):
 
-    if ((random_city == 'Bakersfield') or (random_city == 'Philadelphia')):
+    if ((random_city == 'Bakersfield') or (random_city == 'Raleigh')):
         print('Filling Applicaion for ' + random_city)
         application_part_1(driver, random_city, fake_identity)
         driver.find_element_by_xpath(CONTINUE).click()

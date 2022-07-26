@@ -15,12 +15,14 @@ CITIES_TO_STATES = {
     'Ithaca': 'New York',
     'Anchorage': 'Alaska',
     'Bakersfield': 'California',
+    'Raleigh': 'North Carolina',
     # city: cap_to_state[city],
 
 }
 
 CITIES_TO_ZIP_CODES = {
     'Bakersfield': ['93308'],
+    'Raleigh': ['27601'],
     'Elmira': ['14901', '14902', '14904', '14905'],
     'Seattle': ['98101', '98102', '98103', '98114', '98117', '98122'],
     'Ithaca': ['14850', '14851', '14852'],
@@ -33,6 +35,7 @@ CITIES_TO_ZIP_CODES = {
 
 CITIES_TO_URLS = {
     'Bakersfield': ['https://starbucks.taleo.net/careersection/1000222retail/jobdetail.ftl?job=220049835&lang=en&src=JB-12106'],
+    'Raleigh': ['https://starbucks.taleo.net/careersection/1000222retail/jobdetail.ftl?job=220041376&lang=en'],
     # 'Seattle' : ['https://starbucks.taleo.net/careersection/jobdetail.ftl?job=220003195&lang=en#.YhUW6k9wwFc.link'],
     # 'Elmira' : ['https://starbucks.taleo.net/careersection/jobdetail.ftl?job=220008435&lang=en',
     #                    'https://starbucks.taleo.net/careersection/jobdetail.ftl?job=220011416&lang=en',
